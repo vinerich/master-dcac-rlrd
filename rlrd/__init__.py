@@ -19,6 +19,12 @@ import rlrd.dcac
 import rlrd.dcac_models
 import rlrd.envs
 
+from gym.envs.registration import register
+
+register(
+    id='zinc-coating-v0',
+    entry_point='zinc_coating.zinc_coating_environment:ZincCoatingV0',
+)
 
 def iterate_episodes(run_cls: type = Training, checkpoint_path: str = None):
     """Generator [1] yielding episode statistics (list of pd.Series) while running and checkpointing
@@ -124,16 +130,16 @@ DcacTraining = partial(
     Training,
     Agent=partial(
         rlrd.dcac.Agent,
-        device="cuda",
+        device="cpu",
         rtac=False,  # set this to True for reverting to RTAC
-        batchsize=128,
+        batchsize=64,
         Model=partial(
             rlrd.dcac_models.Mlp,
             act_delay=True,
             obs_delay=True)),
     Env=partial(
         rlrd.envs.RandomDelayEnv,
-        id="Pendulum-v0",
+        id="zinc-coating-v0",
         min_observation_delay=0,
         sup_observation_delay=1,
         min_action_delay=0,

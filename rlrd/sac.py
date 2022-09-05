@@ -19,16 +19,16 @@ class Agent:
 
     Model: type = rlrd.sac_models.Mlp
     OutputNorm: type = PopArt
-    batchsize: int = 256  # training batch size
-    memory_size: int = 1000000  # replay memory size
-    lr: float = 0.0003  # learning rate
-    discount: float = 0.99  # reward discount factor
-    target_update: float = 0.005  # parameter for exponential moving average
+    batchsize: int = 64  # training batch size
+    memory_size: int = 100000  # replay memory size
+    lr: float = 0.005  # learning rate
+    discount: float = 0.995  # reward discount factor
+    target_update: float = 0.05  # parameter for exponential moving average
     reward_scale: float = 5.
     entropy_scale: float = 1.
     start_training: int = 10000
     device: str = None
-    training_steps: float = 1.  # training steps per environment interaction step
+    training_steps: float = 0.125  # training steps per environment interaction step
 
     model_nograd = cached_property(lambda self: no_grad(copy_shared(self.model)))
 

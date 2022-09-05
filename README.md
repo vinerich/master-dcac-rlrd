@@ -2,6 +2,12 @@
 
 PyTorch implementation of our paper [Reinforcement Learning with Random Delays (ICLR 2020)](https://openreview.net/forum?id=QFYnKlBJYR) – [[Arxiv]](https://arxiv.org/abs/2010.02966)
 
+### Evaluate custom gym environment
+```bash
+docker build . -t master-dcac:0.1
+docker run master-dcac:0.1
+```
+
 ### Getting Started
 This repository can be pip-installed via:
 ```bash
