@@ -142,8 +142,8 @@ DcacTraining = partial(
         id="zinc-coating-v0",
         min_observation_delay=0,
         sup_observation_delay=1,
-        min_action_delay=0,
-        sup_action_delay=1,
+        min_action_delay=99,
+        sup_action_delay=100,
         real_world_sampler=0),
 )
 
