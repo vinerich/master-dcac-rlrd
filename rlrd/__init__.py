@@ -44,10 +44,19 @@ def iterate_episodes(run_cls: type = Training, checkpoint_path: str = None):
         else:
             print("\ncontinuing...\n")
 
+        base_log_path = "/logs/dcac-delay-" + str(partial_to_dict(run_cls)["Env"]["sup_action_delay"])
+        if not exists(base_log_path):
+            os.makedirs(base_log_path)
+
+        trial_log_path = base_log_path + "/zinc-coating-v0_" + str(len(os.listdir(base_log_path)))
+        if not exists(trial_log_path):
+            os.makedirs(trial_log_path)
+
         run_instance = load(checkpoint_path)
         while run_instance.epoch < run_instance.epochs:
             # time.sleep(1)  # on network file systems writing files is asynchronous and we need to wait for sync
-            yield run_instance.run_epoch()  # yield stats data frame (this makes this function a generator)
+            # yield stats data frame (this makes this function a generator)
+            yield run_instance.run_epoch(trial_log_path + "/evaluations.npz") 
             print("")
             dump(run_instance, checkpoint_path)
 

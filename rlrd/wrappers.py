@@ -65,20 +65,32 @@ class StatsWrapper(gym.Wrapper):
 
     def stats(self):
         returns = [0]
+        returns_lows = [0]
+        returns_highs = [0]
         steps = [0]
         for reward, done in zip(self.reward_hist, self.done_hist):
             returns[-1] += reward
+            if reward == -2:
+                returns_lows[-1] += 1
+            elif reward == -1:
+                returns_highs[-1] += 1
             steps[-1] += 1
             if done:
                 returns.append(0)
+                returns_lows.append(0)
+                returns_highs.append(0)
                 steps.append(0)
         returns = returns[1:-1]  # first and last episodes are incomplete
+        returns_lows = returns_lows[1:-1]
+        returns_highs = returns_highs[1:-1]
         steps = steps[1:-1]
 
         return dict(
             episodes=len(returns),
             episode_length=np.mean(steps) if len(steps) else np.nan,
             returns=np.mean(returns) if len(returns) else np.nan,
+            returns_lows=np.mean(returns_lows) if len(returns_lows) else np.nan,
+            returns_highs=np.mean(returns_highs) if len(returns_highs) else np.nan,
             average_reward=np.mean(tuple(self.reward_hist)[1:]),
         )
 

@@ -21,6 +21,8 @@ ENV PWD=/app
 RUN mkdir /app
 WORKDIR $PWD
 
+RUN mkdir /logs
+
 COPY . .
 
 RUN chmod +x ./train.sh
